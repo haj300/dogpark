@@ -8,11 +8,10 @@ import java.util.UUID;
 @Builder
 public class DogParkDto {
 
-    UUID id;
-    long latitude;
-    long longitude;
+    int id;
+    double latitude;
+    double longitude;
     String name;
-    String dogParkDescription;
-
+    String description;
 
 }
