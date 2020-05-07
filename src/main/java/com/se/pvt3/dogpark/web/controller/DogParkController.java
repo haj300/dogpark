@@ -7,7 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/dog_park")
@@ -19,12 +21,16 @@ public class DogParkController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<DogParkDto> getDogParkByName(@PathVariable("name") String name) {
-        return new ResponseEntity<>(dogParkService.getDogParkByName(name), HttpStatus.OK);
+        Optional<DogParkDto> dogParkByName = dogParkService.getDogParkByName(name);
+        DogParkDto dogParkDto = dogParkByName.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(dogParkDto, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<DogParkDto> getDogParkById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(dogParkService.getDogParkById(id), HttpStatus.OK);
+        Optional<DogParkDto> dogParkById = dogParkService.getDogParkById(id);
+        DogParkDto dogParkDto = dogParkById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(dogParkDto, HttpStatus.OK);
     }
 
     @PostMapping

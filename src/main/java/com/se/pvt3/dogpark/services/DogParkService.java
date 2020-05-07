@@ -2,13 +2,13 @@ package com.se.pvt3.dogpark.services;
 
 import com.se.pvt3.dogpark.web.model.DogParkDto;
 
-import java.util.UUID;
+import java.util.Optional;
 
 public interface DogParkService {
 
-    DogParkDto getDogParkById(int dogParkId);
+    Optional<DogParkDto> getDogParkById(int dogParkId);
 
-    DogParkDto getDogParkByName(String name);
+    Optional<DogParkDto> getDogParkByName(String name);
 
     void saveNewDogPark(DogParkDto dogParkDto);
 

@@ -9,40 +9,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class DogParkServiceImpl implements DogParkService{
+public class DogParkServiceImpl implements DogParkService {
 
     @Autowired
     private final DogParkRepository dogParkRepository;
 
-    public Optional<DogPark> findById(int id) {
-        return dogParkRepository.findById(id);
+    @Override
+    public Optional<DogParkDto> getDogParkById(int dogParkId) {
+        Optional<DogPark> optionalDogPark = dogParkRepository.findById(dogParkId);
+        if (optionalDogPark.isPresent()) {
+            DogPark dogPark = optionalDogPark.get();
+            return Optional.of(DogParkDto.builder()
+                    .description(dogPark.getDescription())
+                    .latitude(dogPark.getLatitude())
+                    .longitude(dogPark.getLongitude())
+                    .name(dogPark.getName())
+                    .id(dogPark.getId())
+                    .build());
+        }
+        return Optional.empty();
     }
 
     @Override
-    public DogParkDto getDogParkById(int dogParkId) {
-        dogParkRepository.findById(dogParkId);
-
-        return DogParkDto.builder()
-                .name("lal")
-                .description("descrip")
-                .longitude(81928192)
-                .latitude(5647)
-                .build();
-    }
-
-    @Override
-    public DogParkDto getDogParkByName(String name) {
-        return DogParkDto.builder()
-                .name("lal")
-                .description("descrip")
-                .longitude(81928192)
-                .latitude(23672364)
-                .build();
+    public Optional<DogParkDto> getDogParkByName(String dogParkName) {
+        Optional<DogPark> optionalDogPark = dogParkRepository.findAllByName(dogParkName);
+        if (optionalDogPark.isPresent()) {
+            DogPark dogPark = optionalDogPark.get();
+            return Optional.of(DogParkDto.builder()
+                    .description(dogPark.getDescription())
+                    .latitude(dogPark.getLatitude())
+                    .longitude(dogPark.getLongitude())
+                    .name(dogPark.getName())
+                    .id(dogPark.getId())
+                    .build());
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -66,3 +71,4 @@ public class DogParkServiceImpl implements DogParkService{
         log.debug("Deleting dog park");
     }
 }
+
