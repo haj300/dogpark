@@ -3,7 +3,6 @@ package com.se.pvt3.dogpark.repository;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "dog_park")

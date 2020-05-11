@@ -3,14 +3,12 @@ package com.se.pvt3.dogpark.web.controller;
 import com.se.pvt3.dogpark.services.DogParkService;
 import com.se.pvt3.dogpark.web.model.DogParkDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @RequestMapping("/api/v1/dog_park")
 @RestController
@@ -44,7 +42,6 @@ public class DogParkController {
         dogParkService.updateDogPark(id, dogParkDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
