@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @ConfigurationProperties(prefix = "pvt.dogpark", ignoreUnknownFields = false)
 public class DogParkClient {
 
-    public final String DOGPARK_PATH_V1 = "/api/v1/dogpark/";
+    public final String DOGPARK_PATH_V1 = "/api/v1/dog_park/";
     private String apihost;
 
     private final RestTemplate restTemplate;

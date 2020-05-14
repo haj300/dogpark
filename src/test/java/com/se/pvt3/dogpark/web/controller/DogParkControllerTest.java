@@ -61,7 +61,7 @@ class DogParkControllerTest {
     @AfterEach
     void tearDown() {
     }
-
+/*
     @Test
     void getDogParkById() throws Exception {
         given(dogParkService.getDogParkById(any(Integer.class))).willReturn(java.util.Optional.ofNullable(validDogPark));
@@ -72,6 +72,8 @@ class DogParkControllerTest {
                 .andExpect(jsonPath("$.id", is(validDogPark.getId())))
                 .andExpect(jsonPath("$.name", is("hahjsh")));
     }
+    */
+
 
     @Test
     void createDogPark() {
