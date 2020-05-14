@@ -2,7 +2,8 @@ package com.se.pvt3.dogpark.services;
 
 import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
-import com.se.pvt3.dogpark.web.model.DogParkDto;
+import com.se.pvt3.dogpark.web.model.DogParkRequestDto;
+import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class DogParkServiceImpl implements DogParkService {
     private final DogParkRepository dogParkRepository;
 
     @Override
-    public Optional<DogParkDto> getDogParkById(int dogParkId) {
+    public Optional<DogParkResponseDto> getDogParkById(int dogParkId) {
         Optional<DogPark> optionalDogPark = dogParkRepository.findById(dogParkId);
         if (optionalDogPark.isPresent()) {
             DogPark dogPark = optionalDogPark.get();
-            return Optional.of(DogParkDto.builder()
+            return Optional.of(DogParkResponseDto.builder()
                     .description(dogPark.getDescription())
                     .latitude(dogPark.getLatitude())
                     .longitude(dogPark.getLongitude())
@@ -35,11 +36,11 @@ public class DogParkServiceImpl implements DogParkService {
     }
 
     @Override
-    public Optional<DogParkDto> getDogParkByName(String dogParkName) {
+    public Optional<DogParkResponseDto> getDogParkByName(String dogParkName) {
         Optional<DogPark> optionalDogPark = dogParkRepository.findAllByName(dogParkName);
         if (optionalDogPark.isPresent()) {
             DogPark dogPark = optionalDogPark.get();
-            return Optional.of(DogParkDto.builder()
+            return Optional.of(DogParkResponseDto.builder()
                     .description(dogPark.getDescription())
                     .latitude(dogPark.getLatitude())
                     .longitude(dogPark.getLongitude())
@@ -51,18 +52,18 @@ public class DogParkServiceImpl implements DogParkService {
     }
 
     @Override
-    public void saveNewDogPark(DogParkDto dogParkDto) {
+    public void saveNewDogPark(DogParkRequestDto dogParkRequestDto) {
         DogPark dogPark = DogPark.builder()
-                .description(dogParkDto.getDescription())
-                .name(dogParkDto.getName())
-                .longitude(dogParkDto.getLongitude())
-                .latitude(dogParkDto.getLatitude())
+                .description(dogParkRequestDto.getDescription())
+                .name(dogParkRequestDto.getName())
+                .longitude(dogParkRequestDto.getLongitude())
+                .latitude(dogParkRequestDto.getLatitude())
                 .build();
         dogParkRepository.save(dogPark);
     }
 
     @Override
-    public void updateDogPark(int id, DogParkDto dogParkDto) {
+    public void updateDogPark(int id, DogParkResponseDto dogParkResponseDto) {
 
     }
 

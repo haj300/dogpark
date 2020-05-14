@@ -1,6 +1,7 @@
 package com.se.pvt3.dogpark.web.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
@@ -9,10 +10,7 @@ import javax.validation.constraints.Size;
 
 @Value
 @Builder
-public class DogParkDto {
-
-    @Null
-    int id;
+public class DogParkRequestDto {
 
     @Positive
     double latitude;
