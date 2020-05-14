@@ -29,7 +29,7 @@ public class DogParkController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<DogParkDto> getDogParkById(@NotNull @PathVariable("id") int id) {
+    public ResponseEntity<DogParkDto> getDogParkById(@PathVariable("id") int id) {
         Optional<DogParkDto> dogParkById = dogParkService.getDogParkById(id);
         DogParkDto dogParkDto = dogParkById.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return new ResponseEntity<>(dogParkDto, HttpStatus.OK);
