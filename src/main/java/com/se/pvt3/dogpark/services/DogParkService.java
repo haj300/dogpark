@@ -13,7 +13,7 @@ public interface DogParkService {
 
     void saveNewDogPark(DogParkRequestDto dogParkRequestDto);
 
-    void updateDogPark(int id, DogParkResponseDto dogParkResponseDto);
+    void updateDogPark(int id, DogParkRequestDto dogParkRequestDto);
 
     void deleteById(int id);
 }

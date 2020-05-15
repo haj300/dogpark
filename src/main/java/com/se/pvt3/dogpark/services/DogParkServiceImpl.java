@@ -63,7 +63,8 @@ public class DogParkServiceImpl implements DogParkService {
     }
 
     @Override
-    public void updateDogPark(int id, DogParkResponseDto dogParkResponseDto) {
+    public void updateDogPark(int id, DogParkRequestDto dogParkRequestDto) {
+
 
     }
 
