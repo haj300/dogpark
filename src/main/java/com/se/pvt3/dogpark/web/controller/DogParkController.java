@@ -1,9 +1,8 @@
 package com.se.pvt3.dogpark.web.controller;
 
-import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.services.DogParkService;
-import com.se.pvt3.dogpark.web.model.DogParkRequestDto;
-import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
+import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
+import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +47,13 @@ public class DogParkController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity updateDogParkDescription(@PathVariable int id, @Valid @RequestBody DogParkRequestDto dogParkRequestDto){
-        Optional<DogParkResponseDto> dogParkById = dogParkService.getDogParkById(id);
+    @PutMapping("/update/{id}")
+    public ResponseEntity updateDogPark(@PathVariable int id, @Valid @RequestBody DogParkRequestDto dogParkRequestDto){
+        dogParkService.updateDogPark(id, dogParkRequestDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDogPark(@PathVariable int id){
         dogParkService.deleteById(id);

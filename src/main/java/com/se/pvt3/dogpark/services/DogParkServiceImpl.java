@@ -2,8 +2,8 @@ package com.se.pvt3.dogpark.services;
 
 import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
-import com.se.pvt3.dogpark.web.model.DogParkRequestDto;
-import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
+import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
+import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

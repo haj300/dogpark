@@ -1,7 +1,7 @@
 package com.se.pvt3.dogpark.services;
 
-import com.se.pvt3.dogpark.web.model.DogParkRequestDto;
-import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
+import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
+import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package com.se.pvt3.dogpark.repository;
 
-import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

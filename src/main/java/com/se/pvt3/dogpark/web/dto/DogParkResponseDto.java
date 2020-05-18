@@ -1,4 +1,4 @@
-package com.se.pvt3.dogpark.web.model;
+package com.se.pvt3.dogpark.web.dto;
 
 import lombok.*;
 
