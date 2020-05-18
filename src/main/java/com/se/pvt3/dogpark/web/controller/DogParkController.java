@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,6 +22,11 @@ import java.util.Optional;
 public class DogParkController {
 
     private final DogParkService dogParkService;
+
+    @GetMapping("/dogparks")
+    public List <DogParkResponseDto> getAllDogParks(){
+        return dogParkService.getAllDogs();
+    }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<DogParkResponseDto> getDogParkByName(@NotNull @PathVariable("name") String name) {
@@ -44,9 +50,7 @@ public class DogParkController {
 
     @PutMapping("update/{id}")
     public ResponseEntity updateDogParkDescription(@PathVariable int id, @Valid @RequestBody DogParkRequestDto dogParkRequestDto){
-        dogParkService.updateDogPark(id, dogParkRequestDto);
-
-        Optional<DogPark> dogPark =
+        Optional<DogParkResponseDto> dogParkById = dogParkService.getDogParkById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

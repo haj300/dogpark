@@ -1,5 +1,6 @@
 package com.se.pvt3.dogpark.web.controller;
 
+import com.se.pvt3.dogpark.services.DogParkNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -25,5 +26,10 @@ public class MvcExceptionHandler {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<List> handleBindException(BindException ex){
         return new ResponseEntity(ex.getAllErrors(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DogParkNotFoundException.class)
+    public ResponseEntity<List> handleDogParkNotFoundException(){
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

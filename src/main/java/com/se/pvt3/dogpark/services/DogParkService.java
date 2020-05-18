@@ -3,6 +3,7 @@ package com.se.pvt3.dogpark.services;
 import com.se.pvt3.dogpark.web.model.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.model.DogParkResponseDto;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DogParkService {
@@ -11,11 +12,15 @@ public interface DogParkService {
 
     Optional<DogParkResponseDto> getDogParkByName(String name);
 
+    List<DogParkResponseDto> getAllDogs();
+
     void saveNewDogPark(DogParkRequestDto dogParkRequestDto);
 
     void updateDogPark(int id, DogParkRequestDto dogParkRequestDto);
 
     void deleteById(int id);
+
+
 }
 
 
