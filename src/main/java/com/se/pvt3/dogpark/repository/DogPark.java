@@ -3,6 +3,7 @@ package com.se.pvt3.dogpark.repository;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "dog_park")
@@ -23,5 +24,8 @@ public class DogPark {
     @Column(name="name", unique = true)
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "id")
+    private Set<Review> reviews;
 
 }

@@ -22,7 +22,7 @@ public class DogParkController {
 
     private final DogParkService dogParkService;
 
-    @GetMapping("/dogparks")
+    @GetMapping("/all")
     public List <DogParkResponseDto> getAllDogParks(){
         return dogParkService.getAllDogs();
     }
