@@ -73,6 +73,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteById(int id) {
-
+        Optional<Review> optionalReview = reviewRepository.findById(id);
+        optionalReview.ifPresent(reviewRepository::delete);
+        log.debug("Deleting review");
     }
 }

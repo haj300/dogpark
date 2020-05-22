@@ -16,12 +16,15 @@ POST dogpark
 https://dog-park-micro.herokuapp.com/api/v1/dog_park/?name=XXXX&longitude=XXXX&latitude=XXXX
 
 { "name": "Not blank",
-  "longitude": "Only positives",
-  "latitude": "Only positives"
+  "longitude": Only positives,
+  "latitude": Only positives
   }
   
-PUT dogpark
-https://dog-park-micro.herokuapp.com/api/v1/dog_park/update
+PUT dogpark (by id)
+https://dog-park-micro.herokuapp.com/api/v1/dog_park/update/?id=XX
+
+DELETE dogpark (by id)
+https://dog-park-micro.herokuapp.com/api/v1/dog_park/delete/?id=XX
 
 ## Review
 
@@ -33,4 +36,11 @@ https://dog-park-micro.herokuapp.com/api/v1/review/id/XXXX
 
 POST review
 https://dog-park-micro.herokuapp.com/api/v1/review/
+{ "comment": "XXXX", 
+"rating": 0-5,
+"dogpark_id": Not null, Only positives
+}
+
+DELETE review (by id)
+https://dog-park-micro.herokuapp.com/api/v1/review/delete/?id=XX
 
