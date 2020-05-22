@@ -2,10 +2,8 @@ package com.se.pvt3.dogpark.repository;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "review")
@@ -14,11 +12,16 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Builder
-public class Review {
+public class Review implements Serializable {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="dogpark_id", nullable=false)
+    DogPark dogpark;
 
     @Id
-    @ManyToOne
-    private DogPark id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id", insertable = false, updatable = false, nullable = false)
+    int id;
 
     private int rating;
 

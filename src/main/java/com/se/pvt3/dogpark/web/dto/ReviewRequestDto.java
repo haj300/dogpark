@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @Builder
 public class ReviewRequestDto {
 
+    int dogParkId;
+
     @Positive
     @Size(min = 0, max = 5)
     int rating;

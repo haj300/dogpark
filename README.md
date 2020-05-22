@@ -2,6 +2,7 @@
 
 ## Link: https://dog-park-micro.herokuapp.com/
 
+## Dogpark
 GET dogpark (by id)
 https://dog-park-micro.herokuapp.com/api/v1/dog_park/id/XXXX
 
@@ -21,3 +22,15 @@ https://dog-park-micro.herokuapp.com/api/v1/dog_park/?name=XXXX&longitude=XXXX&l
   
 PUT dogpark
 https://dog-park-micro.herokuapp.com/api/v1/dog_park/update
+
+## Review
+
+GET review (all)
+https://dog-park-micro.herokuapp.com/api/v1/review/all
+
+GET review (by id)
+https://dog-park-micro.herokuapp.com/api/v1/review/id/XXXX
+
+POST review
+https://dog-park-micro.herokuapp.com/api/v1/review/
+

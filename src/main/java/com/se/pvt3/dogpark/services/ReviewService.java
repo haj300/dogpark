@@ -4,11 +4,10 @@ import com.se.pvt3.dogpark.web.dto.ReviewRequestDto;
 import com.se.pvt3.dogpark.web.dto.ReviewResponseDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ReviewService {
 
-    Optional<ReviewResponseDto> getReviewById(int id);
+    List<ReviewResponseDto> getReviewsByDogParkId(int id);
 
     List<ReviewResponseDto> getAllReviews();
 

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class DogParkServiceImpl implements DogParkService {
 
-    @Autowired
+
     private final DogParkRepository dogParkRepository;
 
     @Override
@@ -45,7 +45,7 @@ public class DogParkServiceImpl implements DogParkService {
     public List<DogParkResponseDto> getAllDogs() {
         List<DogPark> dogParks = dogParkRepository.findAll();
         return dogParks.stream()
-                .map(dogPark -> toDto(dogPark))
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 

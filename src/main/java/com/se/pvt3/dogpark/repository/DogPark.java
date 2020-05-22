@@ -3,6 +3,7 @@ package com.se.pvt3.dogpark.repository;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-public class DogPark {
+public class DogPark implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +26,7 @@ public class DogPark {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "dogpark", fetch = FetchType.LAZY, targetEntity = Review.class)
     private Set<Review> reviews;
 
 }
