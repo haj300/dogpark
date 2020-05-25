@@ -18,12 +18,12 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/all")
+    @GetMapping(path = "/all")
     public List<ReviewResponseDto> getAllReviews(){
         return reviewService.getAllReviews();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping(path = "/id/{id}")
     public ResponseEntity<ReviewResponseDto> getReviewByDogParkId(@PathVariable("id")int id){
         List<ReviewResponseDto> reviewById = reviewService.getReviewsByDogParkId(id);
         return new ResponseEntity(reviewById, HttpStatus.OK);
@@ -36,7 +36,7 @@ public class ReviewController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     @ResponseBody()
     public void deleteReview(@PathVariable int id){ reviewService.deleteById(id);}
 }
