@@ -29,4 +29,6 @@ public class DogPark implements Serializable {
     @OneToMany(mappedBy = "dogpark", fetch = FetchType.LAZY, targetEntity = Review.class)
     private Set<Review> reviews;
 
+    @OneToMany(mappedBy = "dogpark", fetch = FetchType.LAZY, targetEntity = Image.class)
+    private Set<Image> images;
 }

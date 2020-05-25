@@ -2,6 +2,7 @@ package com.se.pvt3.dogpark.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se.pvt3.dogpark.services.DogParkService;
+import com.se.pvt3.dogpark.services.ReviewService;
 import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
 import org.junit.jupiter.api.AfterEach;
@@ -32,6 +33,9 @@ class DogParkControllerTest {
 
     @MockBean
     DogParkService dogParkService;
+
+    @MockBean
+    ReviewService reviewService;
 
     @Autowired
     MockMvc mockMvc;
