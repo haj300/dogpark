@@ -23,6 +23,10 @@ public class Image implements Serializable {
     @JoinColumn(name="dogpark_id", nullable=false)
     DogPark dogpark;
 
+    @Column(name ="url")
     String url;
 
+    public String toString() {
+        return url;
+    }
 }
