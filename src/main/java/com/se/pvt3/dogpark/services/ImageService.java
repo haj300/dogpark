@@ -19,18 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 
 @Service
-public class ImageService {
+public class ImageService implements ImageServiceInterface {
 
     private String awsS3AudioBucket;
     private AmazonS3 amazonS3;
@@ -55,55 +51,64 @@ public class ImageService {
         //Get dogPark that should use the image
         Optional<DogPark> dogPark = dogParkRepository.findById(id);
 
-        //Create a new image to store the URL of the file that is being created
-        Image image = new Image();
+        if (dogPark.isPresent()) {
 
-        //Creating the file
-        String fileName = multipartFile.getOriginalFilename();
+            //Create a new image to store the URL of the file that is being created
+            Image image = new Image();
 
-        try {
-            //creating the file in the server (temporarily)
-            File file = new File(fileName);
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(multipartFile.getBytes());
-            fos.close();
+            //Creating the file
+            String fileName = multipartFile.getOriginalFilename();
 
-            for(int i = -1; i < dogPark.get().getImages().size(); i++) {
+            try {
+                //creating the file in the server (temporarily)
+                File file = new File(fileName);
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(multipartFile.getBytes());
+                fos.close();
 
-                if(i == dogPark.get().getImages().size() - 1) {
-                    fileName = "picture " + dogPark.get().getName() + (i + 1) + "." + FilenameUtils.getExtension(fileName);
+                for (int i = -1; i < dogPark.get().getImages().size(); i++) {
+
+                    if (i == dogPark.get().getImages().size() - 1) {
+                        fileName = "picture/" + dogPark.get().getName() + (i + 1) + "." + FilenameUtils.getExtension(fileName);
+                    }
                 }
+
+                //Set the URL to the new image and connect with the correct dog park and save it to the repository
+                image.setUrl("https://dogparks.s3.amazonaws.com/" + fileName);
+                image.setDogpark(dogPark.get());
+                imageRepository.save(image);
+
+                //Add the image to the dog park
+                dogPark.get().getImages().add(image);
+
+                PutObjectRequest putObjectReqeust = new PutObjectRequest(this.awsS3AudioBucket, fileName, file);
+
+                if (enablePublicReadAccess) {
+                    putObjectReqeust.withCannedAcl(CannedAccessControlList.PublicRead);
+                }
+
+                this.amazonS3.putObject(putObjectReqeust);
+
+            } catch (IOException | AmazonServiceException ex) {
+                logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
             }
-
-            //Set the URL to the new image and connect with the correct dog park and save it to the repository
-            image.setUrl("https://dog-profile-pictures.s3.amazonaws.com/" + fileName);
-            image.setDogpark(dogPark.get());
-            imageRepository.save(image);
-
-            //Add the image to the dog park
-            dogPark.get().getImages().add(image);
-
-            PutObjectRequest putObjectReqeust = new PutObjectRequest(this.awsS3AudioBucket, fileName, file);
-
-            if (enablePublicReadAccess) {
-                putObjectReqeust.withCannedAcl(CannedAccessControlList.PublicRead);
-            }
-
-            this.amazonS3.putObject(putObjectReqeust);
-
-            //removing the file created in the server
-            file.delete();
-
-        } catch (IOException | AmazonServiceException ex) {
-            logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
+        }
+        else {
+            throw new DogParkNotFoundException();
         }
     }
 
-        public URL getPicturesByParkId(int id) throws MalformedURLException {
+        public String getPicturesByParkId(int id) {
 
-        Optional<DogPark> dogPark = dogParkRepository.findById(id);
-        //List<String> parkImages = dogPark.get().getImages();
-        //Implementera så att alla URL skickas tillbaka!
-        return new URL("tjenatjena.se");
-    }
+            Optional<DogPark> dogPark = dogParkRepository.findById(id);
+
+            if (dogPark.isPresent()) {
+                Set<Image> images = dogPark.get().getImages();
+                System.out.println(images.toString());
+                return images.toString(); }
+            else {
+                throw new DogParkNotFoundException();
+            }
+        }
+
 }

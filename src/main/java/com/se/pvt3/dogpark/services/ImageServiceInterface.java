@@ -1,10 +1,11 @@
 package com.se.pvt3.dogpark.services;
 
-import java.net.URL;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageServiceInterface {
 
-    List<URL> getReviewsByDogParkId(int id);
+    String getPicturesByParkId(int id);
+
+    void uploadPictureToParkById(int id, MultipartFile multipartFile, boolean enablePublicReadAccess);
 
 }
