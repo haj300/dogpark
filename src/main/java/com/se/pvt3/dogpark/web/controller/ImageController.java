@@ -22,7 +22,7 @@ public class ImageController {
      * CALL: localhost:8080/image/addImage?id=XXXXX
      * I bodyn skickas det med en RequestPart som är en fil med namnet file
      */
-    @PutMapping(path = "addImage", params = "id")
+    @PostMapping(path = "addImage", params = "id")
     public String uploadFile(@RequestPart(value = "file") MultipartFile file, @RequestParam("id") int id) {
         imageService.uploadPictureToParkById(id, file, true);
         return "File [" + file.getOriginalFilename() + "] uploaded to storage";
