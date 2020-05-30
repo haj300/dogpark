@@ -91,7 +91,7 @@ class DogParkControllerTest {
 
     @Test
     void shouldUpdateDogParkById() throws Exception {
-        mockMvc.perform(put("/api/v1/dog_park/update/" + validDogParkResponseDto.getId())
+        mockMvc.perform(put("/api/v1/dog_park/" + validDogParkResponseDto.getId())
                 .content(objectMapper.writeValueAsString(validDogParkRequestDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
