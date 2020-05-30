@@ -17,15 +17,12 @@ import org.springframework.http.MediaType;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @WebMvcTest
 @ExtendWith(MockitoExtension.class)
@@ -81,7 +78,7 @@ class DogParkControllerTest {
     }
 
     @Test
-    void getDogParkByName() throws Exception {
+    void shouldGetDogParkByName() throws Exception {
         doReturn(java.util.Optional.ofNullable(validDogParkResponseDto)).when(dogParkService).getDogParkByName(any(String.class));
 
         mockMvc.perform(get("/api/v1/dog_park/name/" + validDogParkResponseDto.getName())
@@ -93,7 +90,7 @@ class DogParkControllerTest {
     }
 
     @Test
-    void updateDogParkById() throws Exception {
+    void shouldUpdateDogParkById() throws Exception {
         mockMvc.perform(put("/api/v1/dog_park/update/" + validDogParkResponseDto.getId())
                 .content(objectMapper.writeValueAsString(validDogParkRequestDto))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -104,10 +101,27 @@ class DogParkControllerTest {
     }
 
     @Test
-    void createDogPark() {
+    void shouldCreateDogPark() throws Exception{
+        mockMvc.perform(post("/api/v1/dog_park/")
+        .content(objectMapper.writeValueAsString(validDogParkRequestDto))
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+
+        verify(dogParkService).saveNewDogPark(eq(validDogParkRequestDto));
+
     }
 
     @Test
-    void deleteDogPark() {
+    void shouldDeleteDogPark() throws Exception {
+        mockMvc.perform(delete("/api/v1/dog_park/" + validDogParkResponseDto.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(dogParkService).deleteById(eq(validDogParkResponseDto.getId()));
     }
+
+
+
 }

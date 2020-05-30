@@ -55,13 +55,13 @@ public class DogParkController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateDogPark(@PathVariable int id, @Valid @RequestBody DogParkRequestDto dogParkRequestDto){
         dogParkService.updateDogPark(id, dogParkRequestDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDogPark(@PathVariable int id){
         dogParkService.deleteById(id);

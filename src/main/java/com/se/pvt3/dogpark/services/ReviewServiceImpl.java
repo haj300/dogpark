@@ -36,6 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .map(review -> ReviewResponseDto.builder()
                             .comment(review.getComment())
                             .rating(review.getRating())
+                            .id(review.getId())
                             .build()).collect(Collectors.toList());
         } else {
             throw new DogParkNotFoundException();
@@ -59,7 +60,6 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<DogPark> optionalDogPark = dogParkRepository.findById(reviewRequestDto.getDogParkId());
         if (optionalDogPark.isPresent()) {
             DogPark dogPark = optionalDogPark.get();
-            Set<Review> reviews = dogPark.getReviews();
             Review review = Review.builder()
                     .comment(reviewRequestDto.getComment())
                     .rating(reviewRequestDto.getRating())

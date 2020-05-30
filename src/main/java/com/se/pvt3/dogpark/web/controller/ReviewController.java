@@ -19,8 +19,9 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping(path = "/all")
-    public List<ReviewResponseDto> getAllReviews(){
-        return reviewService.getAllReviews();
+    public ResponseEntity<ReviewResponseDto> getAllReviews(){
+        List<ReviewResponseDto> allReviews = reviewService.getAllReviews();
+        return new ResponseEntity(allReviews, HttpStatus.OK);
     }
 
     @GetMapping(path = "/id/{id}")
