@@ -6,6 +6,7 @@ import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class DogParkServiceImpl implements DogParkService {
 
 
+    @Autowired
     private final DogParkRepository dogParkRepository;
 
     @Override
@@ -77,6 +79,21 @@ public class DogParkServiceImpl implements DogParkService {
         Optional<DogPark> optionalDogPark = dogParkRepository.findById(id);
         optionalDogPark.ifPresent(dogParkRepository::delete);
         log.debug("Deleting dog park");
+    }
+
+    public Optional<List<DogParkResponseDto>> findByDistance(Double latitude, Double longitude, Double distance) {
+        var result = dogParkRepository.findByPositionWithinDistance(latitude, longitude, distance);
+        return buildOptional(result);
+    }
+
+    private Optional<List<DogParkResponseDto>> buildOptional(List<DogPark> list) {
+        if (list.isEmpty()) {
+            return Optional.empty();
+        }
+        var result = list.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+        return Optional.of(result);
     }
 
     private DogParkResponseDto toDto(DogPark dogPark) {

@@ -20,7 +20,7 @@ public interface DogParkService {
 
     void deleteById(int id);
 
-
+    Optional<List<DogParkResponseDto>> findByDistance(Double latitude, Double longitude, Double distance);
 }
 
 

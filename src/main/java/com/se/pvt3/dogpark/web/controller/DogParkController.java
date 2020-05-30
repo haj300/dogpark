@@ -41,6 +41,14 @@ public class DogParkController {
         return new ResponseEntity<>(dogParkResponseDto, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/find", params = { "latitude", "longitude", "distance" })
+    public ResponseEntity<?> findByPosition(@RequestParam Double latitude,
+                                            @RequestParam Double longitude,
+                                            @RequestParam Double distance) {
+        var result = dogParkService.findByDistance(latitude, longitude, distance);
+        return ResponseEntity.of(result);
+    }
+
     @PostMapping
     public ResponseEntity createDogPark(@Valid @RequestBody DogParkRequestDto dogParkRequestDto){
         dogParkService.saveNewDogPark(dogParkRequestDto);
