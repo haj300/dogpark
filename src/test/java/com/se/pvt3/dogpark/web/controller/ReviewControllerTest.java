@@ -5,6 +5,7 @@ import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.repository.Review;
 import com.se.pvt3.dogpark.repository.ReviewRepository;
 import com.se.pvt3.dogpark.services.DogParkService;
+import com.se.pvt3.dogpark.services.ImageService;
 import com.se.pvt3.dogpark.services.ReviewService;
 import com.se.pvt3.dogpark.web.dto.ReviewRequestDto;
 import com.se.pvt3.dogpark.web.dto.ReviewResponseDto;
@@ -44,6 +45,9 @@ class ReviewControllerTest {
 
     @MockBean
     ReviewService reviewService;
+
+    @MockBean
+    ImageService imageService;
 
     @MockBean
     ReviewRepository reviewRepository;

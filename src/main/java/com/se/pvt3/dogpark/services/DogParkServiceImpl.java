@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class DogParkServiceImpl implements DogParkService {
 
 
-    @Autowired
     private final DogParkRepository dogParkRepository;
 
     @Override

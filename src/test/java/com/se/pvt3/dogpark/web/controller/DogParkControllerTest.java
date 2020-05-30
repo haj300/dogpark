@@ -2,6 +2,7 @@ package com.se.pvt3.dogpark.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se.pvt3.dogpark.services.DogParkService;
+import com.se.pvt3.dogpark.services.ImageService;
 import com.se.pvt3.dogpark.services.ReviewService;
 import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.dto.DogParkResponseDto;
@@ -14,13 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,6 +33,9 @@ class DogParkControllerTest {
 
     @MockBean
     ReviewService reviewService;
+
+    @MockBean
+    ImageService imageService;
 
     @Autowired
     MockMvc mockMvc;
@@ -121,7 +124,5 @@ class DogParkControllerTest {
 
         verify(dogParkService).deleteById(eq(validDogParkResponseDto.getId()));
     }
-
-
 
 }
