@@ -2,10 +2,14 @@ package com.se.pvt3.dogpark.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se.pvt3.dogpark.repository.DogPark;
+import com.se.pvt3.dogpark.repository.DogParkRepository;
 import com.se.pvt3.dogpark.repository.Review;
+import com.se.pvt3.dogpark.repository.ReviewRepository;
 import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.dto.ReviewRequestDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -30,17 +34,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
-@Transactional
 public class ReviewIntegrationTests {
 
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
-    private EntityManager entityManager;
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    DogParkRepository dogParkRepository;
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        reviewRepository.deleteAll();
+        dogParkRepository.deleteAll();
+    }
 
     @Test
     public void shouldGetAllReviews() throws Exception {
@@ -55,8 +67,9 @@ public class ReviewIntegrationTests {
                 .rating(3)
                 .dogpark(dogPark)
                 .build();
-        entityManager.persist(dogPark);
-        entityManager.persist(review);
+
+        dogParkRepository.save(dogPark);
+        reviewRepository.save(review);
 
         mockMvc.perform(get("/api/v1/review/all")
                 .accept(MediaType.APPLICATION_JSON))
@@ -80,9 +93,8 @@ public class ReviewIntegrationTests {
                 .rating(3)
                 .dogpark(dogPark)
                 .build();
-        dogPark.setReviews(Set.of(review));
-        entityManager.persist(dogPark);
-        entityManager.persist(review);
+        dogParkRepository.save(dogPark);
+        reviewRepository.save(review);
 
         mockMvc.perform(get("/api/v1/review/id/" + dogPark.getId())
                 .accept(MediaType.APPLICATION_JSON))
@@ -101,7 +113,7 @@ public class ReviewIntegrationTests {
                 .name("Ripleys park")
                 .description("Agility")
                 .build();
-        entityManager.persist(givenDogPark);
+        dogParkRepository.save(givenDogPark);
 
         ReviewRequestDto validReviewRequestDto = ReviewRequestDto.builder()
                 .dogParkId(givenDogPark.getId())
@@ -122,6 +134,5 @@ public class ReviewIntegrationTests {
                 .andExpect(jsonPath("$[0].comment").value(validReviewRequestDto.getComment()))
                 .andExpect(jsonPath("$[0].rating").value(validReviewRequestDto.getRating()));
     }
-
 
 }
