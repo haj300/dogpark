@@ -13,7 +13,7 @@ public interface DogParkRepository extends JpaRepository<DogPark, Integer> {
 
     List<DogPark> findAll();
 
-    @Query("FROM DogParkDAO WHERE "
+    @Query("FROM DogPark WHERE "
             + "(6371392.896 * acos(cos(radians(:latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(latitude))))"
             + " < :distance ORDER BY "
             + "(6371392.896 * acos(cos(radians(:latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(latitude))))"
