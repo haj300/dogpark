@@ -44,3 +44,14 @@ https://dog-park-micro.herokuapp.com/api/v1/review/
 DELETE review (by id)
 https://dog-park-micro.herokuapp.com/api/v1/review/delete/?id=XX
 
+## Images
+
+POST image 
+https://dog-park-micro.herokuapp.com/image/addImage?id=XXXX
+where id = id for the dogpark. 
+In the body there need to be a form-data with key = "file" and value = path to the picture 
+
+GET image
+https://dog-park-micro.herokuapp.com/image/getImages?id=XXXX
+where id = id for the dogpark. 
+returns a String with URL:s to the pictures.
