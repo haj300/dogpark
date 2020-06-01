@@ -69,7 +69,7 @@ public class ImageService implements ImageServiceInterface {
                 for (int i = -1; i < dogPark.get().getImages().size(); i++) {
 
                     if (i == dogPark.get().getImages().size() - 1) {
-                        fileName = "picture/" + dogPark.get().getName() + (i + 1) + "." + FilenameUtils.getExtension(fileName);
+                        fileName = dogPark.get().getName() + "/" + dogPark.get().getName() + (i + 1) + "." + FilenameUtils.getExtension(fileName);
                     }
                 }
 
