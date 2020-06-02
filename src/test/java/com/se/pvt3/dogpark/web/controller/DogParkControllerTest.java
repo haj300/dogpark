@@ -64,10 +64,6 @@ class DogParkControllerTest {
                 .build();
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
    @Test
     void getDogParkById() throws Exception {
         doReturn(java.util.Optional.ofNullable(validDogParkResponseDto)).when(dogParkService).getDogParkById(any(Integer.class));

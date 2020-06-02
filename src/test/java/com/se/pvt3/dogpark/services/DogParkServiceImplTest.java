@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.se.pvt3.dogpark.helper.DogParkTestHelper.getDefaultDogPark;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -47,6 +48,13 @@ class DogParkServiceImplTest {
         assertEquals(givenDogPark.getLatitude(), actualDogParkResponseDto.getLatitude());
     }
 
+
+    @Test
+    void shouldReturnExceptionWhenDogParkIdNotFoundInDatabase(){
+        doReturn(Optional.empty()).when(dogParkRepository).findById(10);
+        assertThrows(DogParkNotFoundException.class, () -> dogParkService.getDogParkById(10));
+    }
+
     @Test
     void getDogParkByName() {
         DogPark givenDogPark = getDefaultDogPark().build();
@@ -59,6 +67,12 @@ class DogParkServiceImplTest {
         assertEquals(givenDogPark.getDescription(), actualDogParkResponseDto.getDescription());
         assertEquals(givenDogPark.getLongitude(), actualDogParkResponseDto.getLongitude());
         assertEquals(givenDogPark.getLatitude(), actualDogParkResponseDto.getLatitude());
+    }
+
+    @Test
+    void shouldReturnExceptionWhenDogParkNameNotFoundInDatabase(){
+        doReturn(Optional.empty()).when(dogParkRepository).findAllByName("Ej här");
+        assertThrows(DogParkNotFoundException.class, () -> dogParkService.getDogParkByName("Ej här"));
     }
 
     @Test
@@ -114,22 +128,22 @@ class DogParkServiceImplTest {
 
     @Test
     void deleteById() {
+        DogPark givenDogPark = getDefaultDogPark().build();
+        doReturn(Optional.of(givenDogPark)).when(dogParkRepository).findById(givenDogPark.getId());
+        ArgumentCaptor<DogPark> dogParkArgumentCaptor = ArgumentCaptor.forClass(DogPark.class);
+
+        dogParkService.deleteById(givenDogPark.getId());
+        verify(dogParkRepository, times(1)).delete(dogParkArgumentCaptor.capture());
+        DogPark actualDogPark = dogParkArgumentCaptor.getValue();
+        assertEquals(givenDogPark, actualDogPark);
     }
 
     @Test
     void findByDistance() {
+
+
     }
 
-    private DogPark.DogParkBuilder getDefaultDogPark() {
-        return DogPark.builder()
-                .id(34)
-                .name("En park")
-                .longitude(123.45)
-                .latitude(567.78)
-                .description("Fin")
-                .images(Collections.emptySet())
-                .reviews(Collections.emptySet());
-    }
 
     private DogParkRequestDto getDefaultRequestDto() {
         return DogParkRequestDto.builder()

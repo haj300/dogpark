@@ -29,9 +29,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -85,6 +84,12 @@ class ReviewControllerTest {
                 .comment("Nämen!")
                 .rating(2)
                 .build();
+
+        validReviewRequestDto = ReviewRequestDto.builder()
+                .comment("haha")
+                .rating(4)
+                .dogParkId(4)
+                .build();
     }
 
 
@@ -97,7 +102,6 @@ class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].id").value(validReviewResponseDto.getId()));
-
     }
 
     @Test
@@ -112,10 +116,24 @@ class ReviewControllerTest {
     }
 
     @Test
-    void createReview() {
+    void createReview() throws Exception {
+        mockMvc.perform(post("/api/v1/review/")
+                .content(objectMapper.writeValueAsString(validReviewRequestDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+
+        verify(reviewService).saveNewReview(eq(validReviewRequestDto));
     }
 
     @Test
-    void deleteReview() {
+    void deleteReview() throws Exception{
+        mockMvc.perform(delete("/api/v1/review/" + validReviewResponseDto.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(reviewService).deleteById(eq(validReviewResponseDto.getId()));
+
     }
 }

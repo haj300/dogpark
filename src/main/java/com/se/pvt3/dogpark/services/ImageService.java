@@ -11,6 +11,7 @@ import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
 import com.se.pvt3.dogpark.repository.Image;
 import com.se.pvt3.dogpark.repository.ImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,27 +25,21 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
-
+@RequiredArgsConstructor
 @Service
 public class ImageService implements ImageServiceInterface {
 
-    private String awsS3AudioBucket;
-    private AmazonS3 amazonS3;
+    @Autowired
+    private final String awsS3AudioBucket;
+    @Autowired
+    private final AmazonS3 amazonS3;
 
     @Autowired
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
     @Autowired
-    private DogParkRepository dogParkRepository;
+    private final DogParkRepository dogParkRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
-
-    @Autowired
-    public ImageService(Region awsRegion, AWSCredentialsProvider awsCredentialsProvider, String awsS3AudioBucket) {
-        this.amazonS3 = AmazonS3ClientBuilder.standard()
-                .withCredentials(awsCredentialsProvider)
-                .withRegion(awsRegion.getName()).build();
-        this.awsS3AudioBucket = awsS3AudioBucket;
-    }
 
     public void uploadPictureToParkById(int id, MultipartFile multipartFile, boolean enablePublicReadAccess) {
 

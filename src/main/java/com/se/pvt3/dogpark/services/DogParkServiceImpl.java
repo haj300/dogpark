@@ -27,7 +27,7 @@ public class DogParkServiceImpl implements DogParkService {
             DogPark dogPark = optionalDogPark.get();
             return Optional.of(toDto(dogPark));
         }
-        return Optional.empty();
+        throw new DogParkNotFoundException();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DogParkServiceImpl implements DogParkService {
             DogPark dogPark = optionalDogPark.get();
             return Optional.of(toDto(dogPark));
         }
-        return Optional.empty();
+        throw new DogParkNotFoundException();
     }
 
     @Override
@@ -47,7 +47,6 @@ public class DogParkServiceImpl implements DogParkService {
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public void saveNewDogPark(DogParkRequestDto dogParkRequestDto) {

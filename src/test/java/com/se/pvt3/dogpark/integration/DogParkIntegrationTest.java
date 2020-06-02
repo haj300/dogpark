@@ -1,4 +1,4 @@
-package com.se.pvt3.dogpark.web.controller;
+package com.se.pvt3.dogpark.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
