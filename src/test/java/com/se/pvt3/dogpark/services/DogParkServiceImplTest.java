@@ -41,6 +41,7 @@ class DogParkServiceImplTest {
 
         Optional<DogParkResponseDto> optionalDogParkResponseDto = dogParkService.getDogParkById(givenDogPark.getId());
         DogParkResponseDto actualDogParkResponseDto = optionalDogParkResponseDto.get();
+
         assertEquals(givenDogPark.getId(), actualDogParkResponseDto.getId());
         assertEquals(givenDogPark.getName(), actualDogParkResponseDto.getName());
         assertEquals(givenDogPark.getDescription(), actualDogParkResponseDto.getDescription());
@@ -50,7 +51,7 @@ class DogParkServiceImplTest {
 
 
     @Test
-    void shouldReturnExceptionWhenDogParkIdNotFoundInDatabase(){
+    void shouldReturnExceptionWhenDogParkIdNotFoundInDatabase() {
         doReturn(Optional.empty()).when(dogParkRepository).findById(10);
         assertThrows(DogParkNotFoundException.class, () -> dogParkService.getDogParkById(10));
     }
@@ -70,7 +71,7 @@ class DogParkServiceImplTest {
     }
 
     @Test
-    void shouldReturnExceptionWhenDogParkNameNotFoundInDatabase(){
+    void shouldReturnExceptionWhenDogParkNameNotFoundInDatabase() {
         doReturn(Optional.empty()).when(dogParkRepository).findAllByName("Ej här");
         assertThrows(DogParkNotFoundException.class, () -> dogParkService.getDogParkByName("Ej här"));
     }
@@ -108,7 +109,9 @@ class DogParkServiceImplTest {
         verify(dogParkRepository, times(1)).save(dogParkArgumentCaptor.capture());
         DogPark actualDogPark = dogParkArgumentCaptor.getValue();
         assertEquals(givenDogParkRequestDto.getName(), actualDogPark.getName());
-        //TODO
+        assertEquals(givenDogParkRequestDto.getDescription(), givenDogParkRequestDto.getDescription());
+        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLongitude());
+        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLatitude());
     }
 
     @Test
@@ -123,7 +126,9 @@ class DogParkServiceImplTest {
         verify(dogParkRepository, times(1)).save(dogParkArgumentCaptor.capture());
         DogPark actualDogPark = dogParkArgumentCaptor.getValue();
         assertEquals(givenDogParkRequestDto.getName(), actualDogPark.getName());
-        //TODO
+        assertEquals(givenDogParkRequestDto.getDescription(), givenDogParkRequestDto.getDescription());
+        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLongitude());
+        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLatitude());
     }
 
     @Test
@@ -140,8 +145,18 @@ class DogParkServiceImplTest {
 
     @Test
     void findByDistance() {
+        DogPark givenDogPark = getDefaultDogPark().build();
+        List<DogPark> givenDogParkList = List.of(givenDogPark);
+        doReturn(givenDogParkList).when(dogParkRepository)
+                .findByPositionWithinDistance(givenDogPark.getLatitude(), givenDogPark.getLongitude(), 57.78);
 
-
+        Optional<List<DogParkResponseDto>> dogParkResponseDtoList = dogParkService
+                .findByDistance(givenDogPark.getLatitude(), givenDogPark.getLongitude(), 57.78);
+        List<DogParkResponseDto> dogParkResponseDtos = dogParkResponseDtoList.get();
+        DogParkResponseDto dogParkResponseDto = dogParkResponseDtos.get(0);
+        assertEquals(givenDogPark.getLatitude(), dogParkResponseDto.getLatitude());
+        assertEquals(givenDogPark.getLongitude(), dogParkResponseDto.getLongitude());
+        assertEquals(givenDogPark.getName(), dogParkResponseDto.getName());
     }
 
 

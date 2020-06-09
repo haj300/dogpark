@@ -1,6 +1,7 @@
 package com.se.pvt3.dogpark.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.se.pvt3.dogpark.services.DogParkNotFoundException;
 import com.se.pvt3.dogpark.services.DogParkService;
 import com.se.pvt3.dogpark.services.ImageService;
 import com.se.pvt3.dogpark.services.ReviewService;
@@ -19,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -74,6 +74,15 @@ class DogParkControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(validDogParkResponseDto.getId()))
                 .andExpect(jsonPath("$.name").value(validDogParkResponseDto.getName()));
+    }
+
+    @Test
+    void shouldReturn405WhenGetDogParkByIdThrowsDogParkNotFoundException() throws Exception {
+        doThrow(new DogParkNotFoundException()).when(dogParkService).getDogParkById(any(Integer.class));
+
+        mockMvc.perform(get("/api/v1/dog_park/id/" + validDogParkResponseDto.getId())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

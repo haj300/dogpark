@@ -3,6 +3,8 @@ package com.se.pvt3.dogpark.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
 import com.se.pvt3.dogpark.repository.ReviewRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,5 +28,12 @@ public class DogParkIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @BeforeEach
+    void setUp() {
+        dogParkRepository.deleteAll();
+    }
+
+
+    //TODO
 
 }

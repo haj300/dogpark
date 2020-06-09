@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class DogParkServiceImpl implements DogParkService {
 
-
     private final DogParkRepository dogParkRepository;
 
     @Override
