@@ -110,7 +110,7 @@ class DogParkServiceImplTest {
         DogPark actualDogPark = dogParkArgumentCaptor.getValue();
         assertEquals(givenDogParkRequestDto.getName(), actualDogPark.getName());
         assertEquals(givenDogParkRequestDto.getDescription(), givenDogParkRequestDto.getDescription());
-        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLongitude());
+        assertEquals(givenDogParkRequestDto.getLongitude(), givenDogParkRequestDto.getLongitude());
         assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLatitude());
     }
 
@@ -127,7 +127,7 @@ class DogParkServiceImplTest {
         DogPark actualDogPark = dogParkArgumentCaptor.getValue();
         assertEquals(givenDogParkRequestDto.getName(), actualDogPark.getName());
         assertEquals(givenDogParkRequestDto.getDescription(), givenDogParkRequestDto.getDescription());
-        assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLongitude());
+        assertEquals(givenDogParkRequestDto.getLongitude(), givenDogParkRequestDto.getLongitude());
         assertEquals(givenDogParkRequestDto.getLatitude(), givenDogParkRequestDto.getLatitude());
     }
 
