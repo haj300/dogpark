@@ -5,10 +5,7 @@ import com.se.pvt3.dogpark.repository.DogPark;
 import com.se.pvt3.dogpark.repository.DogParkRepository;
 import com.se.pvt3.dogpark.repository.Review;
 import com.se.pvt3.dogpark.repository.ReviewRepository;
-import com.se.pvt3.dogpark.web.dto.DogParkRequestDto;
 import com.se.pvt3.dogpark.web.dto.ReviewRequestDto;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +13,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
-import java.util.Set;
-
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
